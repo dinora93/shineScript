@@ -12,6 +12,7 @@ interface Bootcamp {
 
 export default function Dashboard() {
   const [bootcamps, setBootcamps] = useState<Bootcamp[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [openDropdown, setOpenDropdown] = useState(false);
   const navigate = useNavigate();
 
@@ -24,6 +25,10 @@ export default function Dashboard() {
     };
     fetchBootcamps();
   }, []);
+
+  const filteredBootcamps = bootcamps.filter((b) =>
+    b.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
@@ -39,11 +44,25 @@ export default function Dashboard() {
           align-items: center;
           margin-bottom: 1rem;
           gap: 1rem;
+          flex-wrap: wrap;
         }
         .logo {
           width: 200px;
           height: 100px;
           object-fit: contain;
+        }
+        .search-input {
+          flex-grow: 1;
+          max-width: 400px;
+          padding: 10px 15px;
+          font-size: 16px;
+          border-radius: 25px;
+          border: 1px solid #ccc;
+          outline: none;
+          box-shadow: 0 0 8px rgba(0,0,0,0.1);
+          text-align: center;
+          margin: 0 1rem;
+          min-width: 150px;
         }
         .user-icon-container {
           position: relative;
@@ -122,11 +141,11 @@ export default function Dashboard() {
           margin-top: auto;
         }
         .no-bootcamps {
-          grid-column: 1 / -1;
+          grid-column: 4/-3 /* ocupa todo el ancho de la cuadrícula */;
           display: flex;
-          justify-content: center;
+          justify-content: space-around;
           align-items: center;
-          height: 400px;
+          height: 100vh; /* ocupa toda la altura de la ventana */
           color: #999;
           font-size: 20px;
           font-weight: 500;
@@ -161,6 +180,10 @@ export default function Dashboard() {
           .header {
             margin-bottom: 1rem;
           }
+          .search-input {
+            max-width: 100%;
+            margin: 0.5rem 0 0 0;
+          }
         }
       `}</style>
 
@@ -170,6 +193,14 @@ export default function Dashboard() {
             src="https://res.cloudinary.com/dmnbaipjy/image/upload/v1754267629/ChatGPT_Image_3_ago_2025__06_32_22_p.m.-removebg-preview_tpkuoj.png"
             alt="shinescript"
             className="logo"
+          />
+
+          <input
+            type="text"
+            placeholder="Buscar bootcamps..."
+            className="search-input"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
 
           <div className="user-icon-container">
@@ -191,8 +222,8 @@ export default function Dashboard() {
         </div>
 
         <div className="grid">
-          {bootcamps.length > 0 ? (
-            bootcamps.map((b) => (
+          {filteredBootcamps.length > 0 ? (
+            filteredBootcamps.map((b) => (
               <div
                 key={b.id}
                 className="card"
@@ -215,7 +246,9 @@ export default function Dashboard() {
               </div>
             ))
           ) : (
-            <div className="no-bootcamps">No hay bootcamps disponibles</div>
+            <div className="no-bootcamps">
+              No hay coincidencias para "{searchTerm}"
+            </div>
           )}
         </div>
       </div>
