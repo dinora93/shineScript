@@ -17,7 +17,6 @@ export const Navbar = () => {
   const location = useLocation();
   const { showToast } = useToast();
 
-  // Detectar scroll para cambiar estilo del navbar
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -27,7 +26,6 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Cerrar dropdowns al cambiar de ruta
   useEffect(() => {
     setIsOpen(false);
     setUserDropdownOpen(false);
@@ -66,25 +64,24 @@ export const Navbar = () => {
 
   return (
     <>
-      <style>{`
+    <style>{`
+        /* NAVBAR PRINCIPAL */
         .navbar {
           position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
+          top: 0; left: 0; right: 0;
           z-index: 1000;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(20px);
-          border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+          background: rgba(255,255,255,0.96);
+          backdrop-filter: blur(16px);
+          border-bottom: 1px solid #E9D5FF;
+          box-shadow: 0 2px 12px rgba(139,92,246,0.07);
+          transition: background 0.3s, box-shadow 0.3s;
         }
-        
         .navbar.scrolled {
-          background: rgba(255, 255, 255, 0.98);
-          box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
-          border-bottom-color: rgba(139, 92, 246, 0.2);
+          background: rgba(255,255,255,0.99);
+          box-shadow: 0 6px 24px rgba(139,92,246,0.18);
+          border-bottom-color: #C4B5FD;
         }
-        
+
         .navbar-container {
           max-width: 1200px;
           margin: 0 auto;
@@ -94,458 +91,367 @@ export const Navbar = () => {
           justify-content: space-between;
           height: 80px;
         }
-        
+
         .navbar-logo {
           display: flex;
           align-items: center;
+          gap: 0.6rem;
           text-decoration: none;
-          color: #6B46C1;
-          font-weight: 700;
-          font-size: 1.4rem;
-          transition: all 0.3s ease;
-          gap: 0.5rem;
+          color: #7C3AED;
+          font-weight: 800;
+          font-size: 1.5rem;
+          letter-spacing: 1px;
+          transition: color 0.2s, transform 0.2s;
         }
-        
         .navbar-logo:hover {
-          transform: scale(1.05);
-          color: #553C9A;
+          color: #5B21B6;
+          transform: scale(1.07);
         }
-        
         .logo-icon {
-          width: 32px;
-          height: 32px;
-          background: linear-gradient(135deg, #8B5CF6, #6B46C1);
-          border-radius: 8px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
+          width: 36px; height: 36px;
+          background: linear-gradient(135deg, #A78BFA, #7C3AED);
+          border-radius: 10px;
+          display: flex; align-items: center; justify-content: center;
+          color: #fff;
           font-weight: bold;
-          font-size: 1.2rem;
+          font-size: 1.3rem;
+          box-shadow: 0 2px 8px rgba(139,92,246,0.13);
         }
-        
+
         .navbar-center {
           display: flex;
           align-items: center;
-          gap: 3rem;
+          gap: 1.2rem;
           flex: 1;
           justify-content: center;
           max-width: 800px;
           margin: 0 2rem;
         }
-        
+
         .navbar-menu {
           display: flex;
           align-items: center;
-          gap: 2rem;
+          gap: 1rem;
           list-style: none;
-          margin: 0;
-          padding: 0;
+          margin: 0; padding: 0;
         }
-        
+
         .nav-link {
           color: #6B7280;
           text-decoration: none;
           font-weight: 500;
-          font-size: 0.95rem;
-          padding: 0.75rem 1rem;
+          font-size: 1rem;
+          padding: 0.5rem 1rem;
           border-radius: 10px;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: color 0.2s, background 0.2s, transform 0.2s;
           position: relative;
           white-space: nowrap;
         }
-        
-        .nav-link:hover {
-          color: #6B46C1;
-          background: rgba(139, 92, 246, 0.08);
-          transform: translateY(-1px);
+        .nav-link:hover, .nav-link:focus {
+          color: #7C3AED;
+          background: rgba(139,92,246,0.10);
+          transform: translateY(-2px) scale(1.03);
+          outline: none;
         }
-        
         .nav-link.active {
-          color: #6B46C1;
-          background: rgba(139, 92, 246, 0.12);
-          font-weight: 600;
+          color: #7C3AED;
+          background: rgba(139,92,246,0.18);
+          font-weight: 700;
         }
-        
         .nav-link.active::after {
           content: '';
           position: absolute;
-          bottom: 6px;
-          left: 50%;
+          bottom: 6px; left: 50%;
           transform: translateX(-50%);
-          width: 20px;
-          height: 2px;
-          background: linear-gradient(90deg, #8B5CF6, #6B46C1);
-          border-radius: 1px;
+          width: 22px; height: 2.5px;
+          background: linear-gradient(90deg, #A78BFA, #7C3AED);
+          border-radius: 2px;
         }
-        
+
+        /* SEARCH */
         .search-container {
           position: relative;
           flex: 1;
           max-width: 320px;
+          margin-left: 1rem;
         }
-        
         .search-form {
-          position: relative;
           width: 100%;
         }
-        
         .search-input {
           width: 100%;
-          padding: 0.75rem 1rem 0.75rem 2.5rem;
-          border: 2px solid #E5E7EB;
-          border-radius: 25px;
-          font-size: 0.9rem;
+          padding: 0.5rem 1rem;
+          border-radius: 8px;
+          border: 1px solid #E5E7EB;
+          font-size: 1rem;
           background: #F9FAFB;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: border 0.2s, box-shadow 0.2s;
+        }
+        .search-input:focus, .search-input.focused {
+          border-color: #A78BFA;
+          box-shadow: 0 0 0 2px #E9D5FF;
           outline: none;
         }
-        
-        .search-input:focus,
-        .search-input.focused {
-          border-color: #8B5CF6;
-          background: white;
-          box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
-          transform: scale(1.02);
+
+        /* DROPDOWN EMPRESAS */
+        .dropdown-container {
+          position: relative;
+          display: inline-block;
         }
-        
-        .search-input::placeholder {
-          color: #9CA3AF;
-          font-style: italic;
+        .dropdown-trigger {
+          cursor: pointer;
         }
-        
-        .search-icon {
+        .dropdown-menu-empresas {
           position: absolute;
-          left: 0.875rem;
-          top: 50%;
-          transform: translateY(-50%);
-          color: #9CA3AF;
-          transition: color 0.3s ease;
-          font-size: 1rem;
+          top: 100%; left: 0;
+          background: #fff;
+          border-radius: 12px;
+          box-shadow: 0 10px 25px rgba(139,92,246,0.13);
+          min-width: 210px;
+          z-index: 100;
+          padding: 0.5rem 0;
+          opacity: 0; visibility: hidden;
+          transform: translateY(12px);
+          transition: opacity 0.3s, transform 0.3s;
         }
-        
-        .search-input:focus + .search-icon,
-        .search-input.focused + .search-icon {
-          color: #8B5CF6;
+        .dropdown-container:hover .dropdown-menu-empresas,
+        .dropdown-container:focus-within .dropdown-menu-empresas {
+          opacity: 1; visibility: visible;
+          transform: translateY(0);
         }
-        
+        .dropdown-item-empresas {
+          padding: 0.8rem 1.5rem;
+          display: block;
+          color: #4B5563;
+          text-decoration: none;
+          font-size: 0.97rem;
+          transition: background 0.2s, color 0.2s, padding-left 0.2s;
+        }
+        .dropdown-item-empresas:hover, .dropdown-item-empresas:focus {
+          background: rgba(139,92,246,0.10);
+          color: #7C3AED;
+          padding-left: 1.8rem;
+          outline: none;
+        }
+
+        /* AUTENTICACIÓN */
         .navbar-auth {
           display: flex;
           align-items: center;
           gap: 1rem;
         }
-        
         .auth-button {
-          padding: 0.625rem 1.25rem;
+          padding: 0.65rem 1.3rem;
           border-radius: 10px;
-          font-weight: 500;
-          font-size: 0.9rem;
+          font-weight: 600;
+          font-size: 1rem;
           text-decoration: none;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           border: none;
           cursor: pointer;
           display: inline-flex;
           align-items: center;
           gap: 0.5rem;
+          background: linear-gradient(135deg, #A78BFA, #7C3AED);
+          color: #fff;
+          box-shadow: 0 2px 8px rgba(139,92,246,0.09);
+          transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
           white-space: nowrap;
         }
-        
         .auth-button.login {
-          color: #6B46C1;
-          background: transparent;
-          border: 2px solid #6B46C1;
+          background: linear-gradient(135deg, #A78BFA, #7C3AED);
         }
-        
-        .auth-button.login:hover {
-          background: #6B46C1;
-          color: white;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(107, 70, 193, 0.25);
-        }
-        
         .auth-button.register {
-          background: linear-gradient(135deg, #8B5CF6, #6B46C1);
-          color: white;
-          border: 2px solid transparent;
+          background: linear-gradient(135deg, #7C3AED, #A78BFA);
+          font-weight: 700;
+          padding: 0.65rem 1.6rem;
         }
-        
-        .auth-button.register:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
-          background: linear-gradient(135deg, #7C3AED, #553C9A);
+        .auth-button:hover, .auth-button:focus {
+          background: linear-gradient(135deg, #7C3AED, #5B21B6);
+          box-shadow: 0 8px 24px rgba(139,92,246,0.18);
+          transform: translateY(-2px) scale(1.04);
+          outline: none;
         }
-        
+
+        /* USER MENU */
         .user-menu {
           position: relative;
         }
-        
         .user-avatar {
-          width: 44px;
-          height: 44px;
+          width: 38px; height: 38px;
+          background: linear-gradient(135deg, #A78BFA, #7C3AED);
           border-radius: 50%;
-          background: linear-gradient(135deg, #8B5CF6, #6B46C1);
-          color: white;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          color: #fff;
+          font-weight: 700;
+          font-size: 1.2rem;
+          display: flex; align-items: center; justify-content: center;
           cursor: pointer;
-          font-weight: 600;
-          font-size: 1rem;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          border: 3px solid transparent;
           position: relative;
+          box-shadow: 0 2px 8px rgba(139,92,246,0.13);
+          border: 2px solid #E9D5FF;
+          transition: box-shadow 0.2s;
         }
-        
-        .user-avatar:hover {
-          transform: scale(1.1);
-          border-color: rgba(139, 92, 246, 0.3);
-        }
-        
         .user-avatar.online::after {
           content: '';
           position: absolute;
-          bottom: 2px;
-          right: 2px;
-          width: 12px;
-          height: 12px;
-          background: #10B981;
-          border: 2px solid white;
+          bottom: 4px; right: 4px;
+          width: 8px; height: 8px;
+          background: #34D399;
           border-radius: 50%;
+          border: 2px solid #fff;
         }
-        
+        .notification-badge {
+          background: #F59E42;
+          color: #fff;
+          font-size: 0.8rem;
+          border-radius: 8px;
+          padding: 0 6px;
+          margin-left: 6px;
+          font-weight: 700;
+          vertical-align: middle;
+        }
         .user-dropdown {
           position: absolute;
-          top: 55px;
-          right: 0;
-          background: white;
-          border-radius: 16px;
-          box-shadow: 0 20px 40px rgba(139, 92, 246, 0.15);
-          min-width: 240px;
-          overflow: hidden;
-          z-index: 1001;
-          animation: dropdownSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          border: 1px solid rgba(139, 92, 246, 0.1);
+          top: 110%; right: 0;
+          background: #fff;
+          border-radius: 14px;
+          box-shadow: 0 12px 32px rgba(139,92,246,0.15);
+          min-width: 220px;
+          z-index: 200;
+          padding: 1rem 0.5rem;
+          animation: fadeIn 0.25s;
         }
-        
-        @keyframes dropdownSlide {
-          from {
-            opacity: 0;
-            transform: translateY(-15px) scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px);}
+          to { opacity: 1; transform: translateY(0);}
         }
-        
         .dropdown-header {
-          padding: 1.25rem;
-          background: linear-gradient(135deg, #F3F4F6, #E5E7EB);
-          border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+          padding: 0.5rem 1rem;
+          border-bottom: 1px solid #F3F4F6;
+          margin-bottom: 0.5rem;
         }
-        
         .dropdown-header h4 {
-          margin: 0 0 0.25rem 0;
-          font-size: 1rem;
-          font-weight: 600;
-          color: #1F2937;
+          margin: 0; font-size: 1.1rem; color: #7C3AED;
         }
-        
         .dropdown-header p {
-          margin: 0;
-          font-size: 0.85rem;
-          color: #6B7280;
+          margin: 0; font-size: 0.95rem; color: #6B7280;
         }
-        
         .dropdown-menu {
           list-style: none;
-          margin: 0;
-          padding: 0.5rem 0;
+          margin: 0; padding: 0;
         }
-        
         .dropdown-item {
-          padding: 0.875rem 1.25rem;
+          padding: 0.7rem 1rem;
+          display: flex; align-items: center;
+          gap: 0.7rem;
+          color: #4B5563;
+          font-size: 0.98rem;
           cursor: pointer;
-          transition: all 0.2s ease;
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          color: #374151;
-          font-size: 0.9rem;
-          font-weight: 500;
+          border-radius: 8px;
+          transition: background 0.2s, color 0.2s;
         }
-        
-        .dropdown-item:hover {
-          background: rgba(139, 92, 246, 0.08);
-          color: #6B46C1;
-          transform: translateX(4px);
+        .dropdown-item:hover, .dropdown-item:focus {
+          background: rgba(139,92,246,0.09);
+          color: #7C3AED;
+          outline: none;
         }
-        
         .dropdown-item.danger {
-          color: #EF4444;
-        }
-        
-        .dropdown-item.danger:hover {
-          background: rgba(239, 68, 68, 0.08);
           color: #DC2626;
         }
-        
         .dropdown-divider {
-          margin: 0.5rem 0;
           border: none;
-          border-top: 1px solid rgba(139, 92, 246, 0.1);
+          border-top: 1px solid #F3F4F6;
+          margin: 0.5rem 0;
         }
-        
+
+        /* MOBILE */
         .mobile-menu-button {
           display: none;
           flex-direction: column;
+          gap: 5px;
           background: none;
           border: none;
           cursor: pointer;
           padding: 0.5rem;
-          gap: 4px;
-          border-radius: 8px;
-          transition: background-color 0.3s ease;
+          margin-left: 1rem;
         }
-        
-        .mobile-menu-button:hover {
-          background: rgba(139, 92, 246, 0.08);
-        }
-        
         .hamburger-line {
-          width: 24px;
-          height: 3px;
-          background: #6B46C1;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          width: 28px; height: 3px;
+          background: #7C3AED;
           border-radius: 2px;
+          transition: all 0.3s;
         }
-        
         .mobile-menu-button.open .hamburger-line:nth-child(1) {
-          transform: rotate(45deg) translate(7px, 7px);
+          transform: translateY(8px) rotate(45deg);
         }
-        
         .mobile-menu-button.open .hamburger-line:nth-child(2) {
           opacity: 0;
-          transform: translateX(-20px);
         }
-        
         .mobile-menu-button.open .hamburger-line:nth-child(3) {
-          transform: rotate(-45deg) translate(7px, -7px);
+          transform: translateY(-8px) rotate(-45deg);
         }
-        
-        .notification-badge {
-          position: absolute;
-          top: -4px;
-          right: -4px;
-          background: #EF4444;
-          color: white;
-          border-radius: 50%;
-          width: 18px;
-          height: 18px;
-          font-size: 0.7rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: 600;
-          animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.1); }
-        }
-        
-        @media (max-width: 1024px) {
+
+        @media (max-width: 900px) {
+          .navbar-container {
+            padding: 0 0.7rem;
+          }
           .navbar-center {
-            gap: 1.5rem;
-            margin: 0 1rem;
-          }
-          
-          .search-container {
-            max-width: 280px;
-          }
-          
-          .navbar-menu {
-            gap: 1rem;
+            gap: 0.7rem;
+            margin: 0 0.5rem;
           }
         }
-        
         @media (max-width: 768px) {
-          .mobile-menu-button {
+          .navbar-container {
+            flex-wrap: wrap;
+            height: auto;
+          }
+          .navbar-center {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+            max-width: 100%;
+            margin: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.98);
+            box-shadow: 0 2px 12px rgba(139,92,246,0.08);
+            border-radius: 12px;
+            padding: 1rem 0.5rem;
+            position: absolute;
+            top: 80px; left: 0; right: 0;
+            z-index: 999;
+            display: none;
+          }
+          .navbar-center.open {
             display: flex;
           }
-          
-          .navbar-center {
-            position: fixed;
-            top: 80px;
-            left: 0;
-            right: 0;
-            background: white;
-            flex-direction: column;
-            padding: 2rem;
-            gap: 2rem;
-            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
-            transform: translateY(-100vh);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 999;
-          }
-          
-          .navbar-center.open {
-            transform: translateY(0);
-            opacity: 1;
-            visibility: visible;
-          }
-          
           .navbar-menu {
             flex-direction: column;
             width: 100%;
             gap: 0.5rem;
           }
-          
-          .nav-link {
-            width: 100%;
-            text-align: center;
-            padding: 1rem;
-            border-radius: 12px;
-          }
-          
           .search-container {
-            max-width: 100%;
-            order: -1;
+            width: 100%;
+            margin-left: 0;
+            margin-top: 0.5rem;
           }
-          
           .navbar-auth {
             flex-direction: column;
             width: 100%;
-            gap: 0.75rem;
+            gap: 0.7rem;
+            margin-top: 0.5rem;
           }
-          
           .auth-button {
             width: 100%;
             justify-content: center;
             padding: 1rem;
           }
-          
-          .user-dropdown {
-            position: fixed;
-            top: 80px;
-            left: 1rem;
-            right: 1rem;
-            width: auto;
+          .mobile-menu-button {
+            display: flex;
           }
-        }
-        
-        /* Offset para contenido principal */
-        .navbar-offset {
-          padding-top: 80px;
         }
       `}</style>
 
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <div className="navbar-container">
-          {/* Logo */}
           <Link to="/" className="navbar-logo">
             <div className="logo-icon">
               &lt;/&gt;
@@ -553,59 +459,51 @@ export const Navbar = () => {
             <span>SHINESCRIPT</span>
           </Link>
 
-          {/* Menú central con navegación y búsqueda */}
           <div className={`navbar-center ${isOpen ? 'open' : ''}`}>
-            {/* Menu de navegación */}
             <ul className="navbar-menu">
               <li>
-                <NavLink to="/">Bootcamps</NavLink>
+                <NavLink to="/bootcamps">Bootcamps</NavLink>
               </li>
               <li>
-                <NavLink to="#aic">AIC</NavLink>
+                <NavLink to="/aic">AIC</NavLink>
+              </li>
+              
+              {/* Menú desplegable para Empresas */}
+              <li className="dropdown-container">
+                <NavLink to="/empresas" className="dropdown-trigger">
+                  Para Empresas
+                </NavLink>
+                <div className="dropdown-menu-empresas">
+                  <Link to="/empresas#contratacion" className="dropdown-item-empresas">
+                    Contratación
+                  </Link>
+                  <Link to="/empresas#capacitacion" className="dropdown-item-empresas">
+                    Capacitación
+                  </Link>
+                  <Link to="/empresas#soluciones" className="dropdown-item-empresas">
+                    Soluciones TI
+                  </Link>
+                </div>
+              </li>
+              
+              <li>
+                <NavLink to="/blog">Blog</NavLink>
               </li>
               <li>
-                <NavLink to="#empresas">Empresas</NavLink>
-              </li>
-              <li>
-                <NavLink to="#blog">Blog</NavLink>
-              </li>
-              <li>
-                <NavLink to="#ppd">PPD</NavLink>
+                <NavLink to="/carreras">Carreras</NavLink>
               </li>
             </ul>
 
-            {/* Barra de búsqueda */}
-            <div className="search-container">
-              <form onSubmit={handleSearch} className="search-form">
-                <input
-                  type="text"
-                  placeholder="Buscar bootcamps..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onFocus={() => setSearchFocused(true)}
-                  onBlur={() => setSearchFocused(false)}
-                  className={`search-input ${searchFocused ? 'focused' : ''}`}
-                />
-                <span className="search-icon">🔍</span>
-              </form>
-            </div>
-
-            {/* Botones de auth en móvil */}
             {!user && (
               <div className="navbar-auth">
                 <Link to="/login" className="auth-button login">
                   <span>👤</span>
                   Iniciar Sesión
                 </Link>
-                <Link to="/register" className="auth-button register">
-                  <span>✨</span>
-                  Registrarse
-                </Link>
               </div>
             )}
           </div>
 
-          {/* Botones de autenticación / Usuario */}
           <div className="navbar-auth">
             {user ? (
               <div className="user-menu">
@@ -615,7 +513,6 @@ export const Navbar = () => {
                   title="Mi cuenta"
                 >
                   {user.displayName ? user.displayName.charAt(0).toUpperCase() : user.email?.charAt(0).toUpperCase()}
-                  {/* Notification badge ejemplo */}
                   <span className="notification-badge">3</span>
                 </div>
 
@@ -674,19 +571,12 @@ export const Navbar = () => {
                 )}
               </div>
             ) : (
-              <>
-                <Link to="/login" className="auth-button login">
-                  Sign In
-                </Link>
-                <Link to="/register" className="auth-button register">
-                  <span>✨</span>
-                  Comenzar
-                </Link>
-              </>
+              <Link to="/register" className="auth-button register">
+                Comenzar Ahora
+              </Link>
             )}
           </div>
 
-          {/* Botón menú móvil */}
           <button 
             className={`mobile-menu-button ${isOpen ? 'open' : ''}`}
             onClick={() => setIsOpen(!isOpen)}

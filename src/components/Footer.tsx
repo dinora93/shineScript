@@ -1,5 +1,8 @@
 // src/components/Footer.tsx
 import { Link } from 'react-router-dom';
+import { SlSocialLinkedin, SlSocialInstagram, SlSocialYoutube } from "react-icons/sl";
+import { PiDiscordLogo } from "react-icons/pi";
+import { SlSocialTwitter } from "react-icons/sl";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -330,9 +333,13 @@ export const Footer = () => {
           }
           
           .footer-social {
+            display: flex;
             justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
           }
-          
+
           .newsletter-form {
             flex-direction: column;
           }
@@ -416,7 +423,7 @@ export const Footer = () => {
                 required
               />
               <button type="submit" className="newsletter-button">
-                Suscribirse ✨
+                Suscribirse
               </button>
             </form>
           </div>
@@ -432,27 +439,10 @@ export const Footer = () => {
                 <span>SHINESCRIPT</span>
               </Link>
               <p className="footer-description">
-                Transformamos carreras a través de bootcamps intensivos de tecnología. 
-                Aprende las habilidades más demandadas del mercado con instructores expertos 
+                Transformamos carreras a través de bootcamps intensivos de tecnología.
+                Aprende las habilidades más demandadas del mercado con instructores expertos
                 y proyectos del mundo real.
               </p>
-              <div className="footer-social">
-                <a href="#" className="social-link" title="LinkedIn">
-                  💼
-                </a>
-                <a href="#" className="social-link" title="Twitter">
-                  🐦
-                </a>
-                <a href="#" className="social-link" title="Instagram">
-                  📸
-                </a>
-                <a href="#" className="social-link" title="YouTube">
-                  📺
-                </a>
-                <a href="#" className="social-link" title="Discord">
-                  💬
-                </a>
-              </div>
             </div>
 
             {/* Bootcamps */}
@@ -507,11 +497,27 @@ export const Footer = () => {
               </ul>
             </div>
           </div>
-
+          <div className="footer-social">
+             <a href="#" className="social-link" title="LinkedIn">
+                <SlSocialLinkedin />
+              </a>
+              <a href="#" className="social-link" title="Twitter">
+                <SlSocialTwitter />
+              </a>
+              <a href="#" className="social-link" title="Instagram">
+                <SlSocialInstagram />
+              </a>
+              <a href="#" className="social-link" title="YouTube">
+                <SlSocialYoutube />
+              </a>
+              <a href="#" className="social-link" title="Discord">
+               <PiDiscordLogo />
+              </a>
+            </div>
           {/* Parte inferior */}
           <div className="footer-bottom">
             <p className="footer-copyright">
-              © {currentYear} ShineScript. Todos los derechos reservados. 
+              © {currentYear} ShineScript. Todos los derechos reservados.
               Hecho con amor para transformar carreras tecnológicas.
             </p>
             <ul className="footer-legal">

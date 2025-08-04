@@ -50,7 +50,7 @@ export default function Home() {
         <p className="hero-subtitle">
           Aprende las tecnologías más demandadas con bootcamps prácticos diseñados por expertos
         </p>
-        
+
         <div className="hero-stats">
           <div className="stat">
             <span className="stat-number">{bootcamps.length}</span>
@@ -65,15 +65,15 @@ export default function Home() {
             <span className="stat-label">Empleabilidad</span>
           </div>
         </div>
-        
+
         <div className="cta-buttons">
-          <button 
+          <button
             className="cta-primary"
             onClick={() => navigate("/register")}
           >
             Comenzar Gratis
           </button>
-          <button 
+          <button
             className="cta-secondary"
             onClick={() => navigate("/login")}
           >
@@ -81,10 +81,10 @@ export default function Home() {
           </button>
         </div>
       </div>
-      
+
       <div className="hero-visual">
         <div className="hero-image">
-          <img 
+          <img
             src="https://res.cloudinary.com/dmnbaipjy/image/upload/v1754267629/ChatGPT_Image_3_ago_2025__06_32_22_p.m.-removebg-preview_tpkuoj.png"
             alt="ShineScript Education"
           />
@@ -105,16 +105,16 @@ export default function Home() {
           <span className="badge rating">⭐ {bootcamp.rating || 4.5}</span>
         </div>
       </div>
-      
+
       <div className="card-content">
         <h3>{bootcamp.name}</h3>
         <p className="duration">Duración: {bootcamp.duration}</p>
-        
+
         <div className="course-preview">
           <span className="students">👥 {bootcamp.students || '500+'} estudiantes</span>
         </div>
       </div>
-      
+
       <button className="card-action">Ver detalles</button>
     </div>
   );
@@ -269,13 +269,27 @@ export default function Home() {
           border-radius: 12px;
           box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        
-        .logo {
-          width: 150px;
-          height: 75px;
-          object-fit: contain;
+        .header-message {
+          font-size: 0.90rem;
+          font-weight: bold;
+          color: #191b19ff;
+          margin: 0;
+          flex: 1;
+          min-width: 250px;
         }
-        
+          
+        .header-message:hover {
+          color: var(--primary);
+          cursor: pointer;
+        }
+
+        .search-container {
+          display: flex;
+          align-items: center;
+          flex-grow: 1;
+          max-width: 800px;
+          margin: 0 auto;
+        }
         .search-input {
           flex-grow: 1;
           max-width: 400px;
@@ -295,6 +309,11 @@ export default function Home() {
           box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
         }
         
+        .search-input:focus {
+  border-color: #764ba2;
+  box-shadow: 0 0 0 4px rgba(118, 75, 162, 0.1);
+  outline: none;
+}
         .user-icon-container {
           position: relative;
         }
@@ -486,29 +505,33 @@ export default function Home() {
             padding: 1rem;
           }
           
-          .header {
-            flex-direction: column;
-            gap: 1rem;
-          }
-          
-          .search-input {
-            max-width: 100%;
-            margin: 0;
-          }
-        }
-      `}</style>
+
+
+.header {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+`}</style>
 
       <div className="container">
         <HeroSection />
-        
+
         <div className="main-content">
           <div className="header">
-            <img
-              src="https://res.cloudinary.com/dmnbaipjy/image/upload/v1754267629/ChatGPT_Image_3_ago_2025__06_32_22_p.m.-removebg-preview_tpkuoj.png"
-              alt="shinescript"
-              className="logo"
-            />
-
+            <p className="header-message">
+              Reserva tu cupo en nuestros bootcamps y comienza tu carrera tecnológica hoy mismo
+            </p>
             <input
               type="text"
               placeholder="Buscar bootcamps..."
@@ -516,23 +539,6 @@ export default function Home() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-
-            <div className="user-icon-container">
-              <div
-                onClick={() => setOpenDropdown(!openDropdown)}
-                className="user-icon"
-                title="Menú de usuario"
-              >
-                👤
-              </div>
-
-              {openDropdown && (
-                <div className="dropdown">
-                  <button onClick={() => navigate("/login")}>Iniciar sesión</button>
-                  <button onClick={() => navigate("/register")}>Registrarse</button>
-                </div>
-              )}
-            </div>
           </div>
 
           <div className="grid">

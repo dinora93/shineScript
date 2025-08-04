@@ -1,9 +1,8 @@
 // src/pages/Dashboard.tsx
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { db, auth } from "../firebase/firebase";
+import { db } from "../firebase/firebase";  // Eliminamos la importación de auth
 import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
 import { EmptyState } from "../components/EmptyState";
 import { SkeletonCard, Loading } from "../components/Loading";
 import { useToast } from "../hooks/useToast";
@@ -29,7 +28,6 @@ interface Filters {
 export default function Dashboard() {
   const [bootcamps, setBootcamps] = useState<Bootcamp[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [openDropdown, setOpenDropdown] = useState(false);
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -40,17 +38,6 @@ export default function Dashboard() {
   });
   const navigate = useNavigate();
   const { toasts, showToast, removeToast } = useToast();
-
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      showToast("Sesión cerrada correctamente", "success");
-      navigate("/");
-    } catch (error) {
-      console.error("Error al cerrar sesión:", error);
-      showToast("Error al cerrar sesión", "error");
-    }
-  };
 
   const toggleFavorite = (courseId: string) => {
     setFavorites(prev => {
@@ -239,21 +226,13 @@ export default function Dashboard() {
           margin-bottom: 2rem;
           display: flex;
           align-items: center;
-          justify-content: space-between;
+          justify-content: center; /* Centrado horizontal */
           gap: 1rem;
-          flex-wrap: wrap;
-        }
-        
-        .logo {
-          width: 200px;
-          height: 100px;
-          object-fit: contain;
-          flex-shrink: 0;
         }
         
         .search-container {
           flex-grow: 1;
-          max-width: 400px;
+          max-width: 600px; /* Mayor ancho */
           position: relative;
         }
         
@@ -272,69 +251,6 @@ export default function Dashboard() {
           border-color: var(--primary);
           box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
           background: white;
-        }
-        
-        .search-icon {
-          position: absolute;
-          left: 15px;
-          top: 50%;
-          transform: translateY(-50%);
-          color: var(--text-secondary);
-          font-size: 18px;
-        }
-        
-        .user-icon-container {
-          position: relative;
-          flex-shrink: 0;
-        }
-        
-        .user-icon {
-          width: 45px;
-          height: 45px;
-          border-radius: 50%;
-          background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-          color: white;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          cursor: pointer;
-          font-size: 22px;
-          user-select: none;
-          transition: all 0.3s ease;
-          box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
-        }
-        
-        .user-icon:hover {
-          transform: scale(1.1);
-        }
-        
-        .dropdown {
-          position: absolute;
-          top: 55px;
-          right: 0;
-          background: white;
-          border: none;
-          border-radius: 12px;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-          min-width: 180px;
-          z-index: 1001;
-          overflow: hidden;
-        }
-        
-        .dropdown button {
-          display: block;
-          width: 100%;
-          padding: 12px 16px;
-          text-align: left;
-          border: none;
-          background: transparent;
-          cursor: pointer;
-          font-size: 14px;
-          transition: background-color 0.2s ease;
-        }
-        
-        .dropdown button:hover {
-          background-color: #f5f5f5;
         }
         
         .filter-bar {
@@ -563,17 +479,7 @@ export default function Dashboard() {
           .container {
             padding: 1rem;
           }
-          
-          .header-container {
-            flex-direction: column;
-            gap: 1rem;
-          }
-          
-          .logo {
-            width: 150px;
-            height: 75px;
-          }
-          
+                    
           .search-container {
             max-width: 100%;
           }
@@ -613,42 +519,11 @@ export default function Dashboard() {
       
       <div className="container">
         <div className="header-container">
-          <img
-            src="https://res.cloudinary.com/dmnbaipjy/image/upload/v1754267629/ChatGPT_Image_3_ago_2025__06_32_22_p.m.-removebg-preview_tpkuoj.png"
-            alt="shinescript"
-            className="logo"
-          />
-
           <div className="search-container">
-            <div className="search-icon">🔍</div>
-            <input
-              type="text"
-              placeholder="Buscar bootcamps..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
-            />
-          </div>
-
-          <div className="user-icon-container">
-            <div
-              onClick={() => setOpenDropdown(!openDropdown)}
-              className="user-icon"
-              title="Menú de usuario"
-            >
-              👤
-            </div>
-
-            {openDropdown && (
-              <div className="dropdown">
-                <button onClick={handleLogout}>Cerrar sesión</button>
-              </div>
-            )}
           </div>
         </div>
 
         <FilterBar />
-
         <div className={`grid ${viewMode === 'list' ? 'list-mode' : ''}`}>
           {filteredBootcamps.length > 0 ? (
             filteredBootcamps.map((bootcamp) => (

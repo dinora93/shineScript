@@ -1,5 +1,5 @@
 // src/hooks/useToast.ts
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export interface Toast {
   id: string;
@@ -33,7 +33,7 @@ export const useToast = () => {
 export const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);

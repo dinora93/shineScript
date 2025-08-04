@@ -187,7 +187,7 @@ function App() {
                     <div className="text-center">
                       <div className="text-3xl mb-3">📱</div>
                       <h3 className="font-semibold mb-2">WhatsApp</h3>
-                      <p className="text-gray-600">+1 (555) 123-4567</p>
+                      <p className="text-gray-600">+503 2660-0000</p>
                     </div>
                     <div className="text-center">
                       <div className="text-3xl mb-3">🌍</div>
