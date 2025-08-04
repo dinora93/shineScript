@@ -16,17 +16,15 @@ export default function Dashboard() {
   const [openDropdown, setOpenDropdown] = useState(false);
   const navigate = useNavigate();
 
-  // Cerrar sesión
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate("/"); // Redirigir al Home
+      navigate("/");
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }
   };
 
-  // Obtener cursos desde Firestore
   useEffect(() => {
     const fetchBootcamps = async () => {
       const snapshot = await getDocs(collection(db, "bootcamps"));
@@ -38,130 +36,206 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div style={{ padding: "2rem" }}>
-      
-      {/* Barra superior */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "1rem",
-        }}
-      >
-        <h2></h2><img
-          src="https://res.cloudinary.com/dmnbaipjy/image/upload/v1754267629/ChatGPT_Image_3_ago_2025__06_32_22_p.m.-removebg-preview_tpkuoj.png"
-          alt="shinescript"
-          style={{
-        width: "200px",
-        height: "100px",
-        objectFit: "contain",
-        position: "absolute",
-        left: "16px",
-          }}
-          
-        />
+    <>
+      {/* Estilos CSS para adaptividad */}
+      <style>
+        {`
+          .container {
+            padding: 2rem;
+            position: relative;
+            min-height: 100vh;
+          }
+          .header-container {
+            position: relative;
+            height: 100px;
+            margin-bottom: 2rem;
+          }
+          .logo {
+            width: 200px;
+            height: 100px;
+            object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+          .user-icon-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+          }
+          .user-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 22px;
+            user-select: none;
+          }
+          .dropdown {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(123, 118, 118, 0.1);
+            min-width: 160px;
+            z-index: 1001;
+            overflow: hidden;
+          }
+          .dropdown button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            text-align: left;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 14px;
+          }
+          .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+          }
+          .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 350px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            cursor: pointer;
+          }
+          .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+          }
+          .card button {
+            padding: 0.5rem 1rem;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            align-self: center;
+            margin-top: auto;
+          }
+          .no-bootcamps {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 400px;
+            color: #999;
+            font-size: 20px;
+            font-weight: 500;
+            user-select: none;
+          }
 
-        {/* Icono de usuario con dropdown */}
-        <div style={{ position: "relative", marginLeft: "64px" }}>
-          <div
-        onClick={() => setOpenDropdown(!openDropdown)}
-        style={{
-          width: "40px",
-          height: "40px",
-          borderRadius: "50%",
-          backgroundColor: "#4CAF50",
-          color: "white",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          cursor: "pointer",
-          fontSize: "22px",
-          userSelect: "none",
-        }}
-        title="Menú de usuario"
-          >
-        👤
+          /* Media queries para móviles */
+          @media (max-width: 900px) {
+            .grid {
+              grid-template-columns: repeat(2, 1fr);
+            }
+            .logo {
+              width: 150px;
+              height: 75px;
+            }
+          }
+
+          @media (max-width: 600px) {
+            .grid {
+              grid-template-columns: 1fr;
+            }
+            .logo {
+              width: 120px;
+              height: 60px;
+            }
+            .user-icon {
+              width: 35px;
+              height: 35px;
+              font-size: 20px;
+            }
+            .header-container {
+              height: 80px;
+              margin-bottom: 1rem;
+            }
+          }
+        `}
+      </style>
+
+      <div className="container">
+        <div className="header-container">
+          {/* Logo */}
+          <img
+            src="https://res.cloudinary.com/dmnbaipjy/image/upload/v1754267629/ChatGPT_Image_3_ago_2025__06_32_22_p.m.-removebg-preview_tpkuoj.png"
+            alt="shinescript"
+            className="logo"
+          />
+
+          {/* Icono usuario */}
+          <div className="user-icon-container">
+            <div
+              onClick={() => setOpenDropdown(!openDropdown)}
+              className="user-icon"
+              title="Menú de usuario"
+            >
+              👤
+            </div>
+
+            {openDropdown && (
+              <div className="dropdown">
+                <button onClick={handleLogout}>Cerrar sesión</button>
+              </div>
+            )}
           </div>
-
-          {openDropdown && (
-        <div
-          style={{
-            position: "absolute",
-            top: "50px",
-            right: 0,
-            backgroundColor: "white",
-            border: "1px solid #ddd",
-            borderRadius: "8px",
-            boxShadow: "0 2px 8px rgba(123, 118, 118, 0.1)",
-            minWidth: "160px",
-            zIndex: 100,
-            overflow: "hidden",
-          }}
-        >
-          <button
-            onClick={handleLogout}
-            style={{
-          display: "block",
-          width: "100%",
-          padding: "10px",
-          textAlign: "left",
-          border: "none",
-          background: "transparent",
-          cursor: "pointer",
-          fontSize: "14px",
-            }}
-          >
-            Cerrar sesión
-          </button>
         </div>
+
+        {/* Grid de bootcamps */}
+        <div className="grid">
+          {bootcamps.length > 0 ? (
+            bootcamps.map((b) => (
+              <div
+                key={b.id}
+                className="card"
+                onClick={() => navigate("/course/" + b.id)}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.transform = "scale(1.03)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.transform = "scale(1)")
+                }
+              >
+                <img src={b.image} alt={b.name} />
+                <div>
+                  <h3 style={{ margin: "0 0 0.5rem 0" }}>{b.name}</h3>
+                  <p style={{ margin: "0 0 1rem 0", color: "#666" }}>
+                    Duración: {b.duration}
+                  </p>
+                </div>
+                <button>Ver detalles</button>
+              </div>
+            ))
+          ) : (
+            <div className="no-bootcamps">No hay bootcamps disponibles</div>
           )}
         </div>
       </div>
-
-      {/* Listado de cursos */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-          gap: "1rem",
-        }}
-      >
-        {bootcamps.map((b) => (
-          <div
-            key={b.id}
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: "8px",
-              padding: "1rem",
-              textAlign: "center",
-              backgroundColor: "#fff",
-            }}
-          >
-            <img
-              src={b.image}
-              alt={b.name}
-              style={{ width: "100%", borderRadius: "8px" }}
-            />
-            <h3>{b.name}</h3>
-            <p>Duración: {b.duration}</p>
-            <button
-              onClick={() => navigate("/course/" + b.id)}
-              style={{
-                marginTop: "0.5rem",
-                padding: "0.5rem 1rem",
-                backgroundColor: "#28a745",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
-              Ver detalles
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
+    </>
   );
 }

@@ -26,188 +26,199 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div style={{ padding: "2rem", minHeight: "100vh" }}>
-      {/* Barra superior con flex */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "1rem",
-          gap: "1rem",
-        }}
-      >
-        {/* Imagen dentro del flujo */}
-        <img
-          src="https://res.cloudinary.com/dmnbaipjy/image/upload/v1754267629/ChatGPT_Image_3_ago_2025__06_32_22_p.m.-removebg-preview_tpkuoj.png"
-          alt="shinescript"
-          style={{
-            width: "200px",
-            height: "100px",
-            objectFit: "contain",
-          }}
-        />
+    <>
+      <style>{`
+        .container {
+          padding: 2rem;
+          min-height: 100vh;
+          position: relative;
+        }
+        .header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1rem;
+          gap: 1rem;
+        }
+        .logo {
+          width: 200px;
+          height: 100px;
+          object-fit: contain;
+        }
+        .user-icon-container {
+          position: relative;
+        }
+        .user-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: #a2b0beff;
+          color: white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          font-size: 22px;
+          user-select: none;
+        }
+        .dropdown {
+          position: fixed;
+          top: 1rem;
+          right: 1rem;
+          background-color: white;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          box-shadow: 0 2px 8px rgba(123, 118, 118, 0.1);
+          min-width: 160px;
+          z-index: 9999;
+          overflow: hidden;
+        }
+        .dropdown button {
+          display: block;
+          width: 100%;
+          padding: 10px;
+          text-align: left;
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          font-size: 14px;
+        }
+        .grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1rem;
+          min-height: 400px;
+          margin-top: 1rem;
+        }
+        .card {
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          padding: 1rem;
+          text-align: center;
+          background-color: #fff;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          height: 350px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+          transition: transform 0.2s;
+          cursor: pointer;
+        }
+        .card img {
+          width: 100%;
+          height: 150px;
+          object-fit: cover;
+          border-radius: 8px;
+          margin-bottom: 1rem;
+        }
+        .card button {
+          padding: 0.5rem 1rem;
+          background-color: #28a745;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          align-self: center;
+          margin-top: auto;
+        }
+        .no-bootcamps {
+          grid-column: 1 / -1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 400px;
+          color: #999;
+          font-size: 20px;
+          font-weight: 500;
+          user-select: none;
+          text-align: center;
+        }
 
-        {/* Icono usuario con dropdown */}
-        <div style={{ position: "relative" }}>
-          <div
-            onClick={() => setOpenDropdown(!openDropdown)}
-            style={{
-              width: "40px",
-              height: "40px",
-              borderRadius: "50%",
-              backgroundColor: "#a2b0beff",
-              color: "white",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              cursor: "pointer",
-              fontSize: "22px",
-              userSelect: "none",
-            }}
-            title="Menú de usuario"
-          >
-            👤
-          </div>
+        /* Responsive */
+        @media (max-width: 900px) {
+          .grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .logo {
+            width: 150px;
+            height: 75px;
+          }
+        }
 
-          {openDropdown && (
+        @media (max-width: 600px) {
+          .grid {
+            grid-template-columns: 1fr;
+          }
+          .logo {
+            width: 120px;
+            height: 60px;
+          }
+          .user-icon {
+            width: 35px;
+            height: 35px;
+            font-size: 20px;
+          }
+          .header {
+            margin-bottom: 1rem;
+          }
+        }
+      `}</style>
+
+      <div className="container">
+        <div className="header">
+          <img
+            src="https://res.cloudinary.com/dmnbaipjy/image/upload/v1754267629/ChatGPT_Image_3_ago_2025__06_32_22_p.m.-removebg-preview_tpkuoj.png"
+            alt="shinescript"
+            className="logo"
+          />
+
+          <div className="user-icon-container">
             <div
-              style={{
-                position: "fixed",
-                top: "1rem",
-                right: "1rem",
-                backgroundColor: "white",
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-                boxShadow: "0 2px 8px rgba(123, 118, 118, 0.1)",
-                minWidth: "160px",
-                zIndex: 9999,
-                overflow: "hidden",
-              }}
+              onClick={() => setOpenDropdown(!openDropdown)}
+              className="user-icon"
+              title="Menú de usuario"
             >
-              <button
-                onClick={() => navigate("/dashboard")}
-                style={{
-                  display: "block",
-                  width: "100%",
-                  padding: "10px",
-                  textAlign: "left",
-                  border: "none",
-                  background: "transparent",
-                  cursor: "pointer",
-                  fontSize: "14px",
-                }}
-              >
-                Iniciar sesión
-              </button>
-              <button
-                onClick={() => navigate("/register")}
-                style={{
-                  display: "block",
-                  width: "100%",
-                  padding: "10px",
-                  textAlign: "left",
-                  border: "none",
-                  background: "transparent",
-                  cursor: "pointer",
-                  fontSize: "14px",
-                }}
-              >
-                Registrarse
-              </button>
+              👤
             </div>
+
+            {openDropdown && (
+              <div className="dropdown">
+                <button onClick={() => navigate("/dashboard")}>Iniciar sesión</button>
+                <button onClick={() => navigate("/register")}>Registrarse</button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="grid">
+          {bootcamps.length > 0 ? (
+            bootcamps.map((b) => (
+              <div
+                key={b.id}
+                className="card"
+                onClick={() => navigate("/login")}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.transform = "scale(1.03)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.transform = "scale(1)")
+                }
+              >
+                <img src={b.image} alt={b.name} />
+                <div>
+                  <h3 style={{ margin: "0 0 0.5rem 0" }}>{b.name}</h3>
+                  <p style={{ margin: "0 0 1rem 0", color: "#666" }}>
+                    Duración: {b.duration}
+                  </p>
+                </div>
+                <button>Ver detalles</button>
+              </div>
+            ))
+          ) : (
+            <div className="no-bootcamps">No hay bootcamps disponibles</div>
           )}
         </div>
       </div>
-
-      {/* Grid de bootcamps */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: "1rem",
-          minHeight: "400px",
-          marginTop: "1rem",
-        }}
-      >
-        {bootcamps.length > 0 ? (
-          bootcamps.map((b) => (
-            <div
-              key={b.id}
-              style={{
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-                padding: "1rem",
-                textAlign: "center",
-                backgroundColor: "#fff",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                height: "350px",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-                transition: "transform 0.2s",
-                cursor: "pointer",
-              }}
-              onClick={() => navigate("/login")}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.transform = "scale(1.03)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.transform = "scale(1)";
-              }}
-            >
-              <img
-                src={b.image}
-                alt={b.name}
-                style={{
-                  width: "100%",
-                  height: "150px",
-                  objectFit: "cover",
-                  borderRadius: "8px",
-                  marginBottom: "1rem",
-                }}
-              />
-              <div>
-                <h3 style={{ margin: "0 0 0.5rem 0" }}>{b.name}</h3>
-                <p style={{ margin: "0 0 1rem 0", color: "#666" }}>
-                  Duración: {b.duration}
-                </p>
-              </div>
-              <button
-                style={{
-                  padding: "0.5rem 1rem",
-                  backgroundColor: "#28a745",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                  alignSelf: "center",
-                  marginTop: "auto",
-                }}
-              >
-                Ver detalles
-              </button>
-            </div>
-          ))
-        ) : (
-          <div
-            style={{
-              gridColumn: "1 / -1",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "400px",
-              color: "#999",
-              fontSize: "20px",
-              fontWeight: "500",
-              userSelect: "none",
-              textAlign: "center",
-            }}
-          >
-            No hay bootcamps disponibles
-          </div>
-        )}
-      </div>
-    </div>
+    </>
   );
 }
