@@ -37,7 +37,18 @@ export default function Dashboard() {
           marginBottom: "1rem",
         }}
       >
-        <h2>Bootcamps Disponibles</h2>
+        <h2></h2><img
+          src="https://res.cloudinary.com/dmnbaipjy/image/upload/v1754267629/ChatGPT_Image_3_ago_2025__06_32_22_p.m.-removebg-preview_tpkuoj.png"
+          alt="shinescript"
+          style={{
+        width: "200px",
+        height: "100px",
+        objectFit: "contain",
+        position: "absolute",
+        left: "16px",
+          }}
+          
+        />
 
         {/* Icono de usuario con dropdown */}
         <div style={{ position: "relative" }}>
