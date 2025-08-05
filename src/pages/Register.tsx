@@ -103,7 +103,7 @@ export default function Register() {
         
         .register-image {
           width: 50%;
-          background-image: url('https://res.cloudinary.com/dmnbaipjy/image/upload/v1754259592/ChatGPT_Image_3_ago_2025_16_19_30_ghrvsv.png');
+          background-image: url('https://res.cloudinary.com/dqstycwjr/image/upload/v1754352392/Dise%C3%B1o_sin_t%C3%ADtulo_6_xdbccb.png');
           background-size: cover;
           background-position: center;
           position: relative;

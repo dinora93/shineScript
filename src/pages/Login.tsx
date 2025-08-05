@@ -75,7 +75,7 @@ export default function Login() {
         
         .login-image {
           width: 50%;
-          background-image: url('https://res.cloudinary.com/dmnbaipjy/image/upload/v1754259592/ChatGPT_Image_3_ago_2025_16_19_30_ghrvsv.png');
+          background-image: url('https://res.cloudinary.com/dqstycwjr/image/upload/v1754352392/Dise%C3%B1o_sin_t%C3%ADtulo_6_xdbccb.png');
           background-size: cover;
           background-position: center;
           position: relative;
@@ -352,14 +352,6 @@ export default function Login() {
               <h2>Iniciar Sesión</h2>
               <p>Ingresa tus credenciales para acceder</p>
             </div>
-
-            {/* Credenciales de demo */}
-            <div className="demo-credentials">
-              <h4>🚀 Prueba rápida:</h4>
-              <p><strong>Email:</strong> demo@shinescript.com</p>
-              <p><strong>Password:</strong> demo123456</p>
-            </div>
-
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <div className="input-wrapper">
