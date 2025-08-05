@@ -93,7 +93,6 @@ export default function Dashboard() {
         <img src={bootcamp.image} alt={bootcamp.name} />
         <div className="course-badges">
           <span className="badge difficulty">{bootcamp.difficulty}</span>
-          <span className="badge rating">⭐ {bootcamp.rating}</span>
         </div>
         <button 
           className={`favorite-btn ${favorites.includes(bootcamp.id) ? 'active' : ''}`}
