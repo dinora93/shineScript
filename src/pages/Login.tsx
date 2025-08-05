@@ -6,6 +6,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { useToast } from "../hooks/useToast";
 import { ToastContainer } from "../components/ToastContainer";
+import { GrFormViewHide } from "react-icons/gr";
+import { BiShow } from "react-icons/bi";
 
 interface LoginForm {
   email: string;
@@ -399,7 +401,7 @@ export default function Login() {
                   onClick={() => setShowPassword(!showPassword)}
                   title={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                 >
-                  {showPassword ? "🙈" : "👁️"}
+                  {showPassword ? <GrFormViewHide size={20} /> : <BiShow size={20} />}
                 </button>
               </div>
               {errors.password && (
