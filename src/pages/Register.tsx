@@ -549,7 +549,7 @@ export default function Register() {
                   onClick={() => setShowPassword(!showPassword)}
                   title={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                 >
-                  {showPassword ? <GrFormViewHide size={20} /> : <BiShow size={20} />}
+                  {showPassword ? <BiShow size={20} /> : <GrFormViewHide size={20} />}
                 </button>
               </div>
               
@@ -597,7 +597,7 @@ export default function Register() {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   title={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                 >
-                  {showConfirmPassword ? "🙈" : "👁️"}
+                  {showConfirmPassword ? <BiShow size={20} /> : <GrFormViewHide size={20} /> }
                 </button>
               </div>
               {errors.confirmPassword && (
