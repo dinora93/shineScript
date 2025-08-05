@@ -4,7 +4,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";  // Eliminamos la importación de auth
 import { useNavigate } from "react-router-dom";
 import { EmptyState } from "../components/EmptyState";
-import { SkeletonCard, Loading } from "../components/Loading";
+import { Loading } from "../components/Loading";
 import { useToast } from "../hooks/useToast";
 import { ToastContainer } from "../components/ToastContainer";
 
